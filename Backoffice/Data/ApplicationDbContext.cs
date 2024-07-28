@@ -18,71 +18,61 @@ namespace Backoffice.Data
             //Initialize Roles
 
             builder.Entity<IdentityRole>().HasData(
-                new { Id = "1", Name = "Manager", NormalizedName = "MANAGER" },
-                new { Id = "2", Name = "Worker", NormalizedName = "WORKER" },
-                new { Id = "3", Name = "PublicUser", NormalizedName = "PUBLICUSER" }
+                new { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
+                new { Id = "2", Name = "Member", NormalizedName = "MEMBER" },
+                new { Id = "3", Name = "Guide", NormalizedName = "GUIDE" }
                 );
 
             // Initialize the Manager with credentials: Email: manager@mu.edu.lb, Password: Manager@123
 
-            var managerId = Guid.NewGuid().ToString();
+            var adminID = Guid.NewGuid().ToString();
 
             builder.Entity<AppUser>().HasData(
                 new AppUser
                 {
-                    Id = managerId,
-                    FullName = "Manager",
-                    UserName = "manager@mu.edu.lb",
-                    NormalizedUserName = "MANAGER@MU.EDU.LB",
-                    Email = "manager@mu.edu.lb",
-                    NormalizedEmail = "MANAGER@MU.EDU.LB",
-                    PhoneNumber = "1234567890",
+
+                    Id = adminID,
+                    FullName = "Suha Mneimneh",
+                    UserName = "admin@ids.lb",
+                    NormalizedUserName = "ADMIN@IDS.LB",
+                    Email = "admin@ids.lb",
+                    NormalizedEmail = "ADMIN@IDS.LB",
+                    PhoneNumber = "12345678",
                     PhoneNumberConfirmed = true,
                     EmailConfirmed = true,
-                    LockoutEnabled = false,
-                    SecurityStamp = Guid.NewGuid().ToString(),
-                    Deleted = false,
+                    DateOfBirth = new DateTime(1990, 1, 1),
+                    Gender = 'M',
+                    Profession = "member",
+                    Nationality = "Lebanese",
+                    EmergencyPhoneNumber = "123-456-7890",
                     CreatedAt = DateTime.Now,
+                    Deleted = false,
+                    LockoutEnabled = false,
                     TwoFactorEnabled = false,
-                    PasswordHash = "AQAAAAEAACcQAAAAEC6rK5TRHGeXrJ1LtZFyKXDq+6XCQmxvYV0BDp2P10JESYdtA/EUBHqT3WXouCLDCA=="
+                    PasswordHash = "d0d03d56d98cc2e80457f179b7e07480b9d8ad7b8b60ec515bbf64b4a8e6f7bb"
                 }
             );
 
             // Assign the User to Manager Role
 
             builder.Entity<IdentityUserRole<string>>().HasData(
-                    new { UserId = managerId, RoleId = "1" }
+                    new { UserId = adminID, RoleId = "1" }
                 );
 
-            //One-To-Many relation between
 
-            builder.Entity<RequestModel>()
-                .HasOne(h => h.PublicUser)
-                .WithMany(b => b.Requests)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<TaskModel>()
-                .HasOne(h => h.Worker)
-                .WithMany(b => b.Tasks)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<TaskModel>()
-                .HasOne(e => e.Request)
-                .WithOne(e => e.Task)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
-
-
-            //Many-To-Many table "VoteModel"
-            builder.Entity<VoteModel>()
-               .HasKey(r => new { r.RequestId, r.PublicUserId });
+            //Many-To-Many table "EventsToGuides"
+            builder.Entity<EventsToGuides>()
+               .HasKey(r => new { r.EventId, r.GuideId });
+            //Many-To-Many table "EventsToMembers"
+            builder.Entity<EventsToMembers>()
+               .HasKey(r => new { r.EventId, r.MemberId });
 
         }
 
-        public DbSet<RequestModel> Requests { get; set; }
-        public DbSet<TaskModel> Tasks { get; set; }
-        public DbSet<VoteModel> Votes { get; set; }
+        public DbSet<EventModel> Models { get; set; }
+        public DbSet<LookUpModel> Lookups { get; set; }
+        public DbSet<EventsToGuides> EventsToGuides { get; set; }
+        public DbSet<EventsToMembers> EventsToMembers { get; set; }
 
 
     }
