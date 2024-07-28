@@ -19,6 +19,14 @@ namespace Backoffice.Dtos
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
-        public string? Speciality { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
+
+        public char Gender { get; set; }
+
+        public string Profession { get; set; }
+        public string Nationality { get; set; }
+        public string EmergencyPhoneNumber { get; set; }
     }
 }
