@@ -48,7 +48,7 @@ namespace Backoffice.Controllers
         // GET: EventModels/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Lookups, "Id", "Id");
+            ViewData["CategoryId"] = new SelectList(_context.Lookups, "Id", "Name");
             return View();
         }
 

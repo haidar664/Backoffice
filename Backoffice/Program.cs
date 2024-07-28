@@ -1,4 +1,6 @@
+using AutoMapper;
 using Backoffice.Data;
+using Backoffice.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +45,16 @@ builder.Services.AddAuthorization(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add Mapper service
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new AutoMapperProfiles());
+});
+
+IMapper mapper = mappingConfig.CreateMapper();
+
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
