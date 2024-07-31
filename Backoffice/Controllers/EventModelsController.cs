@@ -48,6 +48,7 @@ namespace Backoffice.Controllers
         // GET: EventModels/Create
         public IActionResult Create()
         {
+
             ViewData["CategoryId"] = new SelectList(_context.Lookups, "Id", "Name");
             return View();
         }
@@ -60,12 +61,12 @@ namespace Backoffice.Controllers
         public async Task<IActionResult> Create([Bind("Id,Name,Description,CategoryId,DateFrom,DateTo,Cost,Status,CreatedAt,Deleted")] EventModel eventModel)
         {
             if (ModelState.IsValid)
-            {
-                _context.Add(eventModel);
+            {  
+                _context.Models.Add(eventModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Lookups, "Id", "Id", eventModel.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Lookups, "Id", "Name", eventModel.CategoryId);
             return View(eventModel);
         }
 
@@ -82,7 +83,7 @@ namespace Backoffice.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Lookups, "Id", "Id", eventModel.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Lookups, "Id", "Name", eventModel.CategoryId);
             return View(eventModel);
         }
 
@@ -153,7 +154,8 @@ namespace Backoffice.Controllers
             var eventModel = await _context.Models.FindAsync(id);
             if (eventModel != null)
             {
-                _context.Models.Remove(eventModel);
+                eventModel.Deleted = true;
+                _context.Models.Update(eventModel);
             }
             
             await _context.SaveChangesAsync();

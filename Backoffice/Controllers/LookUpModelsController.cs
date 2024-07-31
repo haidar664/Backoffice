@@ -148,6 +148,7 @@ namespace Backoffice.Controllers
             var lookUpModel = await _context.Lookups.FindAsync(id);
             if (lookUpModel != null)
             {
+
                 _context.Lookups.Remove(lookUpModel);
             }
             

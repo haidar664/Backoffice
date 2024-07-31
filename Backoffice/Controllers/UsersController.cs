@@ -111,7 +111,7 @@ namespace Backoffice.Controllers
 
 
         #region Create
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Create()
         {
             //ViewData["SelectedRoles"] = new SelectList(Roles);
@@ -122,7 +122,7 @@ namespace Backoffice.Controllers
 
         #region CreateUserWithRole
 
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         [HttpPost, ActionName("Create")]
         public async Task<IActionResult> CreateUserWithRole(UserCreationDto UserRegisterDto)
         {
@@ -141,7 +141,7 @@ namespace Backoffice.Controllers
             {
                 await _userManager.AddToRoleAsync(user, UserRegisterDto.Role);
 
-                return RedirectToAction(nameof(Index));
+                return Redirect("/EventModels");
 
             }
 
@@ -161,7 +161,7 @@ namespace Backoffice.Controllers
 
         #region Edit
 
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Edit(string? id)
         {
             if (id == null || _context.Users == null)
@@ -187,7 +187,7 @@ namespace Backoffice.Controllers
 
         #region Edit User
 
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         [HttpPost]
         public async Task<IActionResult> Edit(string id, EditUserDto userDto)
         {
@@ -241,7 +241,7 @@ namespace Backoffice.Controllers
 
 
         #region GET:ChangePassword
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> ChangePassword(string? id)
         {
             
@@ -271,7 +271,7 @@ namespace Backoffice.Controllers
 
         #region ChangePassword
 
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(string id, ChangePasswordDto userDto)
         {
@@ -310,7 +310,7 @@ namespace Backoffice.Controllers
         #region UndoDelete
         // GET: Users/UndoDelete/5
 
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> UndoDelete(string? id)
         {
             if (id == null || _context.Users == null)
@@ -335,7 +335,7 @@ namespace Backoffice.Controllers
         #region Delete User
         // GET: Users/Delete/5
 
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Delete(string? id)
         {
             if (id == null || _context.Users == null)
@@ -357,7 +357,7 @@ namespace Backoffice.Controllers
         #region Delete Confirmed
         // POST: users/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Users == null)
