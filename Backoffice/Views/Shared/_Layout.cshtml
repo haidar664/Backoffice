@@ -51,7 +51,8 @@
                                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                                         @if (User.IsInRole("admin"))
                                         {
-                                            <li><a class="dropdown-item" href="/Users">Users List</a></li>
+                                            <li><a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index"
+                                                    href="/Users">Users List</a></li>
                                         }
                                     </ul>
                                 </div>
