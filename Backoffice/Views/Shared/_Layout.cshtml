@@ -46,12 +46,20 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Users"
                                                 asp-action="ChangePassword">Change Password</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Users"
-                                                asp-action="Delete">delete Account</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                        @if (User.IsInRole("admin"))
+                                        <li><a class="dropdown-item" href="/Identity/Account/Logout">Logout</a></li>
+                                        @if (User.IsInRole("Admin"))
                                         {
-                                            <li><a class="dropdown-item" href="/Users">Users List</a></li>
+                                            <li>
+                                                <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index"
+                                                  >Users List</a>
+                                            </li>
+                                        } 
+                                        else
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-area="" asp-controller="Users"
+                                                   asp-action="Delete">delete Account</a>
+                                            </li>
                                         }
                                     </ul>
                                 </div>
@@ -59,14 +67,13 @@
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" id="register" asp-area="" asp-controller="Users"
-                                    asp-action="Create" asp-page="/Users/Create">Register</a>
+                        <li class="nav-item">
+                                     <a class="nav-link text-dark" id="register" href="Users/Create">Sign in</a>
                             </li>
-                            <li class="nav-item">
+                           @*  <li class="nav-item">
                                 <a class="nav-link text-dark" id="login" asp-area="Identity"
                                     asp-page="/Account/Login">Login</a>
-                            </li>
+                            </li> *@
                         }
                     </ul>
                 </div>
